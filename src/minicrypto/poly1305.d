@@ -32,7 +32,7 @@ struct crypto_poly1305_ctx
 //   end    <= 1
 // Postcondition:
 //   ctx->h <= 4_ffffffff_ffffffff_ffffffff_ffffffff
-private void poly_blocks(crypto_poly1305_ctx* ctx, const(u8)* in_, size_t nb_blocks, uint end)
+private void poly_blocks(crypto_poly1305_ctx* ctx, const(u8)* in_, size_t nb_blocks, uint end) @nogc nothrow
 {
     // Local all the things!
     const(u32) r0 = ctx.r[0];
@@ -91,7 +91,7 @@ private void poly_blocks(crypto_poly1305_ctx* ctx, const(u8)* in_, size_t nb_blo
     ctx.h[4] = h4;
 }
 
-void crypto_poly1305_init(crypto_poly1305_ctx* ctx, const(u8)* key)
+void crypto_poly1305_init(crypto_poly1305_ctx* ctx, const(u8)* key) @nogc nothrow
 {
     // ZERO(ctx.h, 5)
     for (size_t i = 0; i < ctx.h.length; i++)
@@ -109,7 +109,7 @@ void crypto_poly1305_init(crypto_poly1305_ctx* ctx, const(u8)* key)
     for (size_t i = 1; i < 4; i++) { ctx.r[i] &= 0x0ffffffc; }
 }
 
-void crypto_poly1305_update(crypto_poly1305_ctx* ctx, const(u8)* message, size_t message_size)
+void crypto_poly1305_update(crypto_poly1305_ctx* ctx, const(u8)* message, size_t message_size) @nogc nothrow
 {
     // Avoid undefined null pointer increments with empty messages
     if (message_size == 0)
@@ -149,7 +149,7 @@ void crypto_poly1305_update(crypto_poly1305_ctx* ctx, const(u8)* message, size_t
     }
 }
 
-void crypto_poly1305_final(crypto_poly1305_ctx* ctx, u8* mac)
+void crypto_poly1305_final(crypto_poly1305_ctx* ctx, u8* mac) @nogc nothrow
 {
     // Process the last block (if any)
     // We move the final 1 according to remaining input length
@@ -191,7 +191,7 @@ void crypto_poly1305_final(crypto_poly1305_ctx* ctx, u8* mac)
     crypto_wipe(ctx, crypto_poly1305_ctx.sizeof);
 }
 
-void crypto_poly1305(u8* mac, const(u8)* message, size_t message_size, const(u8)* key)
+void crypto_poly1305(u8* mac, const(u8)* message, size_t message_size, const(u8)* key) @nogc nothrow
 {
     crypto_poly1305_ctx ctx = void;
     crypto_poly1305_init(&ctx, key);

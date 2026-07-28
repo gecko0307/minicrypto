@@ -24,7 +24,7 @@ struct crypto_aead_ctx
     uint8_t[8] nonce;
 }
 
-private void lock_auth(u8* mac, const(u8)* auth_key, const(u8)* ad, size_t ad_size, const(u8)* cipher_text, size_t text_size)
+private void lock_auth(u8* mac, const(u8)* auth_key, const(u8)* ad, size_t ad_size, const(u8)* cipher_text, size_t text_size) @nogc nothrow
 {
     u8[16] sizes = void; // Not secret, not wiped
     store64_le(sizes.ptr + 0, ad_size);
@@ -39,7 +39,7 @@ private void lock_auth(u8* mac, const(u8)* auth_key, const(u8)* ad, size_t ad_si
     crypto_poly1305_final (&poly_ctx, mac); // ...here
 }
 
-void crypto_aead_init_x(crypto_aead_ctx* ctx, const(u8)* key, const(u8)* nonce)
+void crypto_aead_init_x(crypto_aead_ctx* ctx, const(u8)* key, const(u8)* nonce) @nogc nothrow
 {
     crypto_chacha20_h(ctx.key.ptr, key, nonce);
     COPY(ctx.nonce.ptr, nonce + 16, 8);
@@ -47,21 +47,21 @@ void crypto_aead_init_x(crypto_aead_ctx* ctx, const(u8)* key, const(u8)* nonce)
     ctx.counter = 0;
 }
 
-void crypto_aead_init_djb(crypto_aead_ctx* ctx, const(u8)* key, const(u8)* nonce)
+void crypto_aead_init_djb(crypto_aead_ctx* ctx, const(u8)* key, const(u8)* nonce) @nogc nothrow
 {
     COPY(ctx.key.ptr, key, 32);
     COPY(ctx.nonce.ptr, nonce, 8);
     ctx.counter = 0;
 }
 
-void crypto_aead_init_ietf(crypto_aead_ctx* ctx, const(u8)* key, const(u8)* nonce)
+void crypto_aead_init_ietf(crypto_aead_ctx* ctx, const(u8)* key, const(u8)* nonce) @nogc nothrow
 {
     COPY(ctx.key.ptr, key, 32);
     COPY(ctx.nonce.ptr, nonce + 4, 8);
     ctx.counter = cast(u64)load32_le(nonce) << 32;
 }
 
-void crypto_aead_write(crypto_aead_ctx* ctx, u8* cipher_text, u8* mac, const(u8)* ad, size_t ad_size, const(u8)* plain_text, size_t text_size)
+void crypto_aead_write(crypto_aead_ctx* ctx, u8* cipher_text, u8* mac, const(u8)* ad, size_t ad_size, const(u8)* plain_text, size_t text_size) @nogc nothrow
 {
     u8[64] auth_key = void; // the last 32 bytes are used for rekeying.
     crypto_chacha20_djb(auth_key.ptr, null, 64, ctx.key.ptr, ctx.nonce.ptr, ctx.counter);
@@ -72,7 +72,7 @@ void crypto_aead_write(crypto_aead_ctx* ctx, u8* cipher_text, u8* mac, const(u8)
     crypto_wipe(auth_key.ptr, auth_key.length * u8.sizeof);
 }
 
-int crypto_aead_read(crypto_aead_ctx* ctx, u8* plain_text, const(u8)* mac, const(u8)* ad, size_t ad_size, const(u8)* cipher_text, size_t text_size)
+int crypto_aead_read(crypto_aead_ctx* ctx, u8* plain_text, const(u8)* mac, const(u8)* ad, size_t ad_size, const(u8)* cipher_text, size_t text_size) @nogc nothrow
 {
     u8[64] auth_key = void; // the last 32 bytes are used for rekeying.
     u8[16] real_mac = void;
@@ -91,7 +91,7 @@ int crypto_aead_read(crypto_aead_ctx* ctx, u8* plain_text, const(u8)* mac, const
     return mismatch;
 }
 
-void crypto_aead_lock(u8* cipher_text, u8* mac, const(u8)* key, const(u8)* nonce, const(u8)* ad, size_t ad_size, const(u8)* plain_text, size_t text_size)
+void crypto_aead_lock(u8* cipher_text, u8* mac, const(u8)* key, const(u8)* nonce, const(u8)* ad, size_t ad_size, const(u8)* plain_text, size_t text_size) @nogc nothrow
 {
     crypto_aead_ctx ctx = void;
     crypto_aead_init_x(&ctx, key, nonce);
@@ -99,7 +99,7 @@ void crypto_aead_lock(u8* cipher_text, u8* mac, const(u8)* key, const(u8)* nonce
     crypto_wipe(&ctx, ctx.sizeof);
 }
 
-int crypto_aead_unlock(u8* plain_text, const(u8)* mac, const(u8)* key, const(u8)* nonce, const(u8)* ad, size_t ad_size, const(u8)* cipher_text, size_t text_size)
+int crypto_aead_unlock(u8* plain_text, const(u8)* mac, const(u8)* key, const(u8)* nonce, const(u8)* ad, size_t ad_size, const(u8)* cipher_text, size_t text_size) @nogc nothrow
 {
     crypto_aead_ctx ctx = void;
     crypto_aead_init_x(&ctx, key, nonce);

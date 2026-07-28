@@ -20,7 +20,7 @@ enum string QUARTERROUND(string a, string b, string c, string d) =
     a ~ " += " ~ b ~ ";  " ~ d ~ " = rotl32(" ~ d ~ " ^ " ~ a ~ ",  8); " ~
     c ~ " += " ~ d ~ ";  " ~ b ~ " = rotl32(" ~ b ~ " ^ " ~ c ~ ",  7);";
 
-private void chacha20_rounds(u32* out_, const(u32)* in_)
+private void chacha20_rounds(u32* out_, const(u32)* in_) @nogc nothrow
 {
     // The temporary variables make Chacha20 10% faster.
     u32 t0 = in_[ 0];  u32 t1 = in_[ 1];  u32 t2 = in_[ 2];  u32 t3 = in_[ 3];
@@ -49,7 +49,7 @@ private void chacha20_rounds(u32* out_, const(u32)* in_)
 
 private string chacha20_constant = "expand 32-byte k"; // 16 bytes
 
-void crypto_chacha20_h(u8* out_, const(u8)* key, const(u8)* in_)
+void crypto_chacha20_h(u8* out_, const(u8)* key, const(u8)* in_) @nogc nothrow
 {
     u32[16] block = void;
     load32_le_buf(block.ptr, cast(const(u8)*)chacha20_constant.ptr, 4);
@@ -65,7 +65,7 @@ void crypto_chacha20_h(u8* out_, const(u8)* key, const(u8)* in_)
     crypto_wipe(block.ptr, block.length * u32.sizeof);
 }
 
-u64 crypto_chacha20_djb(u8* cipher_text, const(u8)* plain_text, size_t text_size, const(u8)* key, const(u8)* nonce, u64 ctr)
+u64 crypto_chacha20_djb(u8* cipher_text, const(u8)* plain_text, size_t text_size, const(u8)* key, const(u8)* nonce, u64 ctr) @nogc nothrow
 {
     u32[16] input = void;
     load32_le_buf(input.ptr     , cast(const(u8)*)chacha20_constant.ptr, 4);
@@ -137,7 +137,7 @@ u64 crypto_chacha20_djb(u8* cipher_text, const(u8)* plain_text, size_t text_size
     return ctr;
 }
 
-u32 crypto_chacha20_ietf(u8* cipher_text, const(u8)* plain_text, size_t text_size, const(u8)* key, const(u8)* nonce, u32 ctr)
+u32 crypto_chacha20_ietf(u8* cipher_text, const(u8)* plain_text, size_t text_size, const(u8)* key, const(u8)* nonce, u32 ctr) @nogc nothrow
 {
     u64 big_ctr = ctr + (cast(u64)load32_le(nonce) << 32);
     return cast(u32)crypto_chacha20_djb(
@@ -145,7 +145,7 @@ u32 crypto_chacha20_ietf(u8* cipher_text, const(u8)* plain_text, size_t text_siz
         key, nonce + 4, big_ctr);
 }
 
-u64 crypto_chacha20_x(u8* cipher_text, const(u8)* plain_text, size_t text_size, const(u8)* key, const(u8)* nonce, u64 ctr)
+u64 crypto_chacha20_x(u8* cipher_text, const(u8)* plain_text, size_t text_size, const(u8)* key, const(u8)* nonce, u64 ctr) @nogc nothrow
 {
     u8[32] sub_key = void;
     crypto_chacha20_h(sub_key.ptr, key, nonce);

@@ -8,6 +8,7 @@ module minicrypto;
 public
 {
     import minicrypto.aead;
+    import minicrypto.blake2b;
     import minicrypto.chacha20;
     import minicrypto.csprng;
     import minicrypto.poly1305;

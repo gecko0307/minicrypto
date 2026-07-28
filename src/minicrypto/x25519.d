@@ -8,7 +8,7 @@ module minicrypto.x25519;
 import minicrypto.utils;
 import minicrypto.finite_field;
 
-void scalarmult(u8* q, const(u8)* scalar, const(u8)* p, int nb_bits)
+void scalarmult(u8* q, const(u8)* scalar, const(u8)* p, int nb_bits) @nogc nothrow
 {
     // computes the scalar product
     fe x1 = void;
@@ -85,7 +85,7 @@ void scalarmult(u8* q, const(u8)* scalar, const(u8)* p, int nb_bits)
     crypto_wipe(t1.ptr, t1.length * i32.sizeof);
 }
 
-void crypto_x25519(u8* raw_shared_secret, const(u8)* your_secret_key, const(u8)* their_public_key)
+void crypto_x25519(u8* raw_shared_secret, const(u8)* your_secret_key, const(u8)* their_public_key) @nogc nothrow
 {
     // restrict the possible scalar values
     u8[32] e = void;
@@ -95,7 +95,7 @@ void crypto_x25519(u8* raw_shared_secret, const(u8)* your_secret_key, const(u8)*
     crypto_wipe(e.ptr, e.length * u8.sizeof);
 }
 
-void crypto_x25519_public_key(u8* public_key, const(u8)* secret_key)
+void crypto_x25519_public_key(u8* public_key, const(u8)* secret_key) @nogc nothrow
 {
     static const(u8)[32] base_point = 9;
     crypto_x25519(public_key, secret_key, base_point.ptr);
