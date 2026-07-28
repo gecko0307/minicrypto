@@ -5,7 +5,7 @@
  */
 
 /**
- * Cryptographically secure preudorandom number generator.
+ * Cryptographically secure pseudorandom number generator.
  * Works on Windows (Vista and above) and Posix.
  * Doesn't use GC, memory must be allocated on the user side.
  */
