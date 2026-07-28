@@ -108,7 +108,7 @@ T cryptoRandomValue(T)() @nogc nothrow
         isFloatingPoint!T)
 {
     T value;
-    assert(cryptoRandomBytes(cast(ubyte*)&value, T.sizeof));
+    cryptoRandomBytes(cast(ubyte*)&value, T.sizeof);
     return value;
 }
 
