@@ -5,7 +5,7 @@
  */
 
 /**
- * Cryptographically secure random number generator.
+ * Cryptographically secure preudorandom number generator.
  * Works on Windows (Vista and above) and Posix.
  * Doesn't use GC, memory must be allocated on the user side.
  */
@@ -110,4 +110,10 @@ T cryptoRandomValue(T)() @nogc nothrow
     T value;
     assert(cryptoRandomBytes(cast(ubyte*)&value, T.sizeof));
     return value;
+}
+
+unittest
+{
+    ubyte[32] data;
+    assert(cryptoRandomBytes(data));
 }
