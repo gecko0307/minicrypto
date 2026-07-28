@@ -19,6 +19,16 @@ Most of it is a direct port of [Monocypher](https://github.com/LoupVaillant/mono
 * `minicrypto.x25519` - Diffie-Hellman key exchange function based on [Curve25519](https://en.wikipedia.org/wiki/Curve25519) elliptic curve
 * `minicrypto.csprng` - cryptographically secure random number generator.
 
+## BetterC
+
+Minicrypto can be optionally used in BetterC mode:
+
+```json
+"subConfigurations": {
+    "minicrypto": "betterC"
+},
+```
+
 ## License
 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
 

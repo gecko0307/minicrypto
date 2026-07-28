@@ -20,7 +20,12 @@
             "targetType": "library"
         },
         {
-            "name": "debug",
+            "name": "betterC",
+            "targetType": "library",
+            "buildOptions": ["betterC"]
+        },
+        {
+            "name": "unittest",
             "targetType": "library"
         }
     ]

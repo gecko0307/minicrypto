@@ -1,0 +1,31 @@
+{
+    "name": "demo",
+    "description": "Minicrypto test app",
+    "homepage": "https://github.com/gecko0307/minicrypto",
+    "license": "CC0-1.0",
+    "authors": [
+        "Timur Gafarov"
+    ],
+    "copyright": "Copyright (C) 2026, Timur Gafarov",
+    
+    "dependencies": {
+        "minicrypto": {
+            "path": ".."
+        }
+    },
+    
+    "importPaths": ["src"],
+    "sourcePaths": ["src"],
+    "mainSourceFile": "src/main.d",
+    
+    "buildRequirements": [
+        "allowWarnings"
+    ],
+    
+    "configurations": [
+        {
+            "name": "application",
+            "targetType": "executable"
+        }
+    ]
+}
