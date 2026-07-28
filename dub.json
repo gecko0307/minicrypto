@@ -1,0 +1,27 @@
+{
+    "name": "minicrypto",
+    "description": "Modern cryptography for D",
+    "license": "CC0-1.0",
+    "authors": [
+        "Timur Gafarov"
+    ],
+    "copyright": "Copyright © 2026, Timur Gafarov",
+    
+    "importPaths": ["src"],
+    "sourcePaths": ["src"],
+    
+    "buildRequirements": [
+        "allowWarnings"
+    ],
+    
+    "configurations": [
+        {
+            "name": "library",
+            "targetType": "library"
+        },
+        {
+            "name": "debug",
+            "targetType": "library"
+        }
+    ]
+}
