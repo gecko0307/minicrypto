@@ -6,9 +6,8 @@ Most of it is a direct port of [Monocypher](https://github.com/LoupVaillant/mono
 
 ## Features
 
-* No dependencies
+* Fast
 * No garbage collector usage (`@nogc`)
-* Designed for systems programming and game development
 * Portable across Windows and Posix systems
 
 ## Modules
