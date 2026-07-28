@@ -6,6 +6,7 @@
 
 /**
  * Secure and fast symmetric stream cipher designed by Daniel J. Bernstein.
+ *
  * The module is a D port of ChaCha20 implementation from Monocypher.
  */
 module minicrypto.chacha20;

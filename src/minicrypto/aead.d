@@ -7,6 +7,7 @@
 /**
  * Authenticated encryption with associated data (AEAD) algorithm that combines
  * the ChaCha20 stream cipher with the Poly1305 message authentication code.
+ *
  * The module is a D port of AEAD implementation from Monocypher.
  */
 module minicrypto.aead;

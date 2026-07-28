@@ -3,6 +3,12 @@
  * You should have received a copy of CC0 along with this work.
  * If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
+
+/**
+ * Elliptic-curve Diffie-Hellman based on Curve25519.
+ *
+ * The module is a D port of X25519 implementation from Monocypher.
+ */
 module minicrypto.x25519;
 
 import minicrypto.utils;

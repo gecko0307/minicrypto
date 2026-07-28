@@ -1,7 +1,15 @@
+/*
+ * This code is available under the Creative Commons Zero 1.0 license (CC0).
+ * You should have received a copy of CC0 along with this work.
+ * If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+ */
+
 /**
  * BLAKE2b cryptographic hash function.
  * Faster than MD5, SHA-1, SHA-2, and SHA-3;
  * provides better security than SHA-2 and similar to that of SHA-3.
+ *
+ * The module is a D port of BLAKE2b implementation from Monocypher.
  */
 module minicrypto.blake2b;
 

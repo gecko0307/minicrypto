@@ -6,6 +6,7 @@
 
 /**
  * One-time message authentication code (MAC) designed by Daniel J. Bernstein.
+ *
  * The module is a D port of Poly1305 implementation from Monocypher.
  */
 module minicrypto.poly1305;
