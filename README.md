@@ -4,6 +4,10 @@ Tiny, zero-dependency cryptographic primitives library for [D language](https://
 
 Most of it is a direct port of [Monocypher](https://github.com/LoupVaillant/monocypher) C code to D, retaining Monocypher API.
 
+[![GitHub Actions CI Status](https://github.com/gecko0307/minicrypto/workflows/CI/badge.svg)](https://github.com/gecko0307/minicrypto/actions?query=workflow%3ACI)
+[![DUB Package](https://img.shields.io/dub/v/minicrypto.svg)](https://code.dlang.org/packages/minicrypto)
+[![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-blue)](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
+
 ## Features
 
 * Fast
