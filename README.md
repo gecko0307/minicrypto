@@ -29,7 +29,7 @@ Minicrypto can be optionally used in BetterC mode. Add the following to your `du
 ```json
 "subConfigurations": {
     "minicrypto": "betterC"
-},
+}
 ```
 
 ## License
