@@ -4,3 +4,12 @@
  * If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 module minicrypto;
+
+public
+{
+    import minicrypto.aead;
+    import minicrypto.chacha20;
+    import minicrypto.csprng;
+    import minicrypto.poly1305;
+    import minicrypto.x25519;
+}
