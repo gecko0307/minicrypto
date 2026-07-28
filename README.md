@@ -37,5 +37,4 @@ Minicrypto can be optionally used in BetterC mode. Add the following to your `du
 
 ## Disclaimer
 
-Minicrypto is intended for applications that need lightweight cryptographic primitives. It is not a replacement for a full cryptographic protocol library.
-Do not design your own cryptographic systems unless you know what you are doing.
+Minicrypto is intended for applications that need lightweight cryptographic primitives for custom secure transport protocols, such as online games, VoIP and IoT. It is not a replacement for a full cryptographic protocol library, and I don't recommend it for critical tasks. Do not design your own cryptographic systems unless you know what you are doing.
