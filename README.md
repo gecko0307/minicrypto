@@ -20,7 +20,7 @@ Most of it is a direct port of [Monocypher](https://github.com/LoupVaillant/mono
 
 ## BetterC
 
-Minicrypto can be optionally used in BetterC mode:
+Minicrypto can be optionally used in BetterC mode. Add the following to your `dub.json`:
 
 ```json
 "subConfigurations": {
