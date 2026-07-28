@@ -16,6 +16,7 @@ Most of it is a direct port of [Monocypher](https://github.com/LoupVaillant/mono
 
 ## Modules
 
+* `minicrypto.argon2` - [Argon2](https://en.wikipedia.org/wiki/Argon2) key derivation function
 * `minicrypto.blake2b` - [BLAKE2b](https://en.wikipedia.org/wiki/BLAKE_(hash_function)#BLAKE2) cryptographic hash function
 * `minicrypto.chacha20` - [ChaCha20](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) stream cipher
 * `minicrypto.poly1305` - [Poly1305](https://en.wikipedia.org/wiki/Poly1305) one-time message authentication code
