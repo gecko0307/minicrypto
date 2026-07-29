@@ -1,12 +1,16 @@
 # Minicrypto
 
-Tiny, zero-dependency cryptographic primitives library for [D language](https://dlang.org).
+Tiny, zero-dependency cryptographic primitives library for [D language](https://dlang.org). Its main use case is building custom secure transport protocols, e.g. for online games, VoIP and IoT.
 
 Most of it is a direct port of [Monocypher](https://github.com/LoupVaillant/monocypher) C code to D, retaining Monocypher API.
 
 [![GitHub Actions CI Status](https://github.com/gecko0307/minicrypto/workflows/CI/badge.svg)](https://github.com/gecko0307/minicrypto/actions?query=workflow%3ACI)
 [![DUB Package](https://img.shields.io/dub/v/minicrypto.svg)](https://code.dlang.org/packages/minicrypto)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-blue)](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
+
+## Why another crypto library?
+
+Most existing libraries are bloated with legacy algorithms that should not be used for building new stuff. Trying to support every existing standard makes them over-engineered and confuses users. Minicrypto provides only a minimal set of modern algorithms. It is not a binding nor a wrapper around system cryptography, and has no dependencies, which makes usage easy and straightforward. Also Minicrypto is the only known `@nogc` and betterC-compliant crypto library for D. Manual memory management is preferable in real-time applications and a strict requirement for system development.
 
 ## Features
 
@@ -37,7 +41,3 @@ Minicrypto can be optionally used in BetterC mode. Add the following to your `du
 
 ## License
 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
-
-## Disclaimer
-
-Minicrypto is intended for applications that need lightweight cryptographic primitives for custom secure transport protocols, such as online games, VoIP and IoT. It is not a replacement for a full cryptographic protocol library, and I don't recommend it for critical tasks. Do not design your own cryptographic systems unless you know what you are doing.
