@@ -194,9 +194,5 @@ unittest
         counter
     );
 
-    assert(memcmp(
-        plaintext.ptr,
-        decrypted.ptr,
-        plaintext.length
-    ) == 0);
+    assert(memcmp(plaintext.ptr, decrypted.ptr, plaintext.length) == 0);
 }

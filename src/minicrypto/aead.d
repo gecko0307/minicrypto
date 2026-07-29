@@ -9,6 +9,13 @@
  * the ChaCha20 stream cipher with the Poly1305 message authentication code.
  *
  * The module is a D port of AEAD implementation from Monocypher.
+ *
+ * AEAD is a form of encryption that provides confidentiality, integrity,
+ * and authenticity while leaving extra metadata unencrypted.
+ * Core parts of AEAD:
+ *  - Secret Key: the key that is used to encrypt and decrypt the data.
+ *  - Associated Data (AD): public metadata that stays unencrypted.
+ *  - Nonce: a unique number used only one time per key to keep every message random.
  */
 module minicrypto.aead;
 
