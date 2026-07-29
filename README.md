@@ -1,6 +1,6 @@
 # Minicrypto
 
-Tiny, zero-dependency cryptographic primitives library for [D language](https://dlang.org). Its main use case is building custom secure transport protocols, e.g. for online games, VoIP and IoT.
+Tiny, zero-dependency cryptographic primitives library for [D language](https://dlang.org). Its main use case is building custom secure transport layers, e.g. for online games, VoIP and IoT.
 
 Most of it is a direct port of [Monocypher](https://github.com/LoupVaillant/monocypher) C code to D, retaining Monocypher API.
 
@@ -10,7 +10,7 @@ Most of it is a direct port of [Monocypher](https://github.com/LoupVaillant/mono
 
 ## Why another crypto library?
 
-Most existing libraries are bloated with legacy algorithms that should not be used for building new stuff. Trying to support every existing standard makes them over-engineered and confuses users. Minicrypto provides only a minimal set of modern algorithms. It is not a binding nor a wrapper around system cryptography, and has no dependencies, which makes usage easy and straightforward. Also Minicrypto is the only known `@nogc` and betterC-compliant crypto library for D. Manual memory management is preferable in real-time applications and a strict requirement for system development.
+Most existing libraries are bloated with legacy crypto primitives that should not be used for building new stuff. Trying to support every existing standard makes them over-engineered and confuses users. Minicrypto provides only a minimal set of modern algorithms. It is not a binding nor a wrapper around system cryptography, and has no dependencies, which makes usage easy and straightforward. Also Minicrypto is the only known `@nogc` and betterC-compliant crypto library for D. Manual memory management is preferable in real-time applications and a strict requirement for system development.
 
 ## Features
 
