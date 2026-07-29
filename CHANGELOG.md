@@ -1,3 +1,7 @@
+Minicrypto 0.4.0 - 30 Jul, 2026
+-------------------------------
+- `minicrypto.eddsa`.
+
 Minicrypto 0.3.0 - 29 Jul, 2026
 -------------------------------
 - `minicrypto.argon2`.
