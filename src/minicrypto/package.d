@@ -12,6 +12,7 @@ public
     import minicrypto.blake2b;
     import minicrypto.chacha20;
     import minicrypto.csprng;
+    import minicrypto.eddsa;
     import minicrypto.poly1305;
     import minicrypto.x25519;
 }

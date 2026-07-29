@@ -22,6 +22,7 @@ Most of it is a direct port of [Monocypher](https://github.com/LoupVaillant/mono
 * `minicrypto.poly1305` - [Poly1305](https://en.wikipedia.org/wiki/Poly1305) one-time message authentication code
 * `minicrypto.aead` - [ChaCha20-Poly1305](https://en.wikipedia.org/wiki/ChaCha20-Poly1305) authenticated encryption with associated data (AEAD) algorithm
 * `minicrypto.x25519` - elliptic-curve Diffie-Hellman based on [Curve25519](https://en.wikipedia.org/wiki/Curve25519)
+* `minicrypto.eddsa` - [EdDSA](https://en.wikipedia.org/wiki/EdDSA) digital signature algorithm based on Curve25519
 * `minicrypto.csprng` - cryptographically secure pseudorandom number generator.
 
 ## BetterC
