@@ -27,7 +27,8 @@ Most existing libraries are bloated with legacy crypto primitives that should no
 * `minicrypto.aead` - [ChaCha20-Poly1305](https://en.wikipedia.org/wiki/ChaCha20-Poly1305) authenticated encryption with associated data (AEAD) algorithm
 * `minicrypto.x25519` - elliptic-curve Diffie-Hellman based on [Curve25519](https://en.wikipedia.org/wiki/Curve25519)
 * `minicrypto.eddsa` - [EdDSA](https://en.wikipedia.org/wiki/EdDSA) digital signature algorithm based on Curve25519
-* `minicrypto.csprng` - cryptographically secure pseudorandom number generator.
+* `minicrypto.csprng` - cryptographically secure pseudorandom number generator
+* `minicrypto.base64` - [Base64](https://en.wikipedia.org/wiki/Base64) encoder and decoder.
 
 ## BetterC
 
