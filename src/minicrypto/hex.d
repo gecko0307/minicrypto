@@ -9,7 +9,7 @@
  */
 module minicrypto.hex;
 
-bool bytes_to_hex(const(ubyte)[] bytes, char[] result) @nogc nothrow
+bool bytes_to_hex(const(ubyte)[] bytes, char[] result) @nogc nothrow pure
 {
     if (result.length != bytes.length * 2)
         return false;
@@ -36,7 +36,7 @@ int char_to_hex(char c) @nogc nothrow pure
     return -1;
 }
 
-bool hex_to_bytes(const(char)[] hex, ubyte[] bytes)
+bool hex_to_bytes(const(char)[] hex, ubyte[] bytes) @nogc nothrow pure
 {
     if (bytes.length != hex.length / 2)
         return false;
