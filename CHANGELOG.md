@@ -1,3 +1,8 @@
+Minicrypto 0.5.0 - TBD
+----------------------
+- `minicrypto.base64`
+- `minicrypto.hex`.
+
 Minicrypto 0.4.0 - 30 Jul, 2026
 -------------------------------
 - `minicrypto.eddsa`.
