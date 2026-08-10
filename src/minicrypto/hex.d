@@ -5,7 +5,7 @@
  */
 
 /**
- * Convert bytes array to a hex string.
+ * Convert bytes array to a hex string and vice versa.
  */
 module minicrypto.hex;
 
@@ -27,6 +27,34 @@ bool bytes_to_hex(const(ubyte)[] bytes, char[] result) @nogc nothrow
     return true;
 }
 
+pragma(inline, true)
+int char_to_hex(char c) @nogc nothrow pure
+{
+    if (c >= '0' && c <= '9') return c - '0';
+    if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+    if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+    return -1;
+}
+
+bool hex_to_bytes(const(char)[] hex, ubyte[] bytes)
+{
+    if (bytes.length != hex.length / 2)
+        return false;
+
+    for (size_t i = 0; i < hex.length; i += 2)
+    {
+        int high = char_to_hex(hex[i]);
+        int low = char_to_hex(hex[i + 1]);
+
+        if (high == -1 || low == -1)
+            return false;
+
+        bytes[i / 2] = cast(ubyte)((high << 4) | low);
+    }
+    
+    return true;
+}
+
 unittest
 {
     import std.stdio;
@@ -38,8 +66,13 @@ unittest
     //writefln("%(%02x%)", data);
     
     char[] hex = new char[data.length * 2];
-    bytes_to_hex(data, hex);
+    assert(bytes_to_hex(data, hex));
     //writeln(hex);
     
     assert(hex == format("%(%02x%)", data));
+    
+    ubyte[] bytes = new ubyte[hex.length / 2];
+    assert(hex_to_bytes(hex, bytes));
+    
+    assert(bytes == data);
 }

@@ -29,7 +29,7 @@ Most existing libraries are bloated with legacy crypto primitives that should no
 * `minicrypto.eddsa` - [EdDSA](https://en.wikipedia.org/wiki/EdDSA) digital signature algorithm based on Curve25519
 * `minicrypto.csprng` - cryptographically secure pseudorandom number generator
 * `minicrypto.base64` - [Base64](https://en.wikipedia.org/wiki/Base64) encoder and decoder
-* `minicrypto.hex` - data-to-hex encoder.
+* `minicrypto.hex` - data-to-hex encoder and decoder.
 
 ## BetterC
 
