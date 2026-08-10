@@ -1,5 +1,5 @@
-Minicrypto 0.5.0 - TBD
-----------------------
+Minicrypto 0.5.0 - 11 Aug, 2026
+-------------------------------
 - `minicrypto.base64`
 - `minicrypto.hex`.
 
