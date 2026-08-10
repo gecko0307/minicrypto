@@ -3,16 +3,22 @@
  * You should have received a copy of CC0 along with this work.
  * If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
+
+/**
+ * Tiny, zero-dependency cryptographic primitives library.
+ */
 module minicrypto;
 
 public
 {
     import minicrypto.aead;
     import minicrypto.argon2;
+    import minicrypto.base64;
     import minicrypto.blake2b;
     import minicrypto.chacha20;
     import minicrypto.csprng;
     import minicrypto.eddsa;
+    import minicrypto.hex;
     import minicrypto.poly1305;
     import minicrypto.x25519;
 }
