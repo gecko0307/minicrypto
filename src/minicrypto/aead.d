@@ -118,8 +118,6 @@ int crypto_aead_unlock(u8* plain_text, const(u8)* mac, const(u8)* key, const(u8)
 
 unittest
 {
-    import core.stdc.string;
-    
     import std.stdio;
     import std.format;
     import std.range: iota;
@@ -159,9 +157,6 @@ unittest
         cast(const(ubyte)*)plaintext.ptr,
         plaintext.length);
     
-    //writefln("%(%02x%)", ciphertext);
-    //writefln("%(%02x%)", mac);
-    
     ubyte[] decrypted = new ubyte[plaintext.length];
     
     crypto_aead_ctx ctx2;
@@ -176,5 +171,5 @@ unittest
         ciphertext.length);
     
     assert(result == 0);
-    assert(memcmp(decrypted.ptr, plaintext.ptr, plaintext.length) == 0);
+    assert(decrypted == plaintext);
 }

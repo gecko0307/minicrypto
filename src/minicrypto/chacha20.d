@@ -183,8 +183,6 @@ unittest
         counter
     );
 
-    //writefln("ChaCha20: %(%02x%)", ciphertext[0..plaintext.length]);
-
     crypto_chacha20_ietf(
         decrypted.ptr,
         ciphertext.ptr,

@@ -110,21 +110,13 @@ unittest
     size_t encodeSize = base64_encode_buffer_size(data);
     assert(encodeSize == Base64.encodeLength(data.length));
     
-    //writefln("Input data: %s", data);
-    
     ubyte[] encoded = new ubyte[encodeSize];
     string encodedStr = base64_encode(data, encoded);
-    //writeln("Encoding:");
-    //writefln("Minicrypto: %s", encodedStr);
-    //writefln("std.base64: %s", Base64.encode(data));
     assert(encodedStr == Base64.encode(data));
     
     size_t decodeSize = base64_decode_buffer_size(encoded);
     assert(decodeSize == data.length);
     ubyte[] decoded = new ubyte[decodeSize];
     base64_decode(encoded, decoded);
-    //writeln("Decoding:");
-    //writefln("Minicrypto: %s", decoded);
-    //writefln("std.base64  %s", Base64.decode(encoded));
     assert(decoded == data);
 }

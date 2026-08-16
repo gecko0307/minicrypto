@@ -109,26 +109,21 @@ void crypto_x25519_public_key(u8* public_key, const(u8)* secret_key) @nogc nothr
 
 unittest
 {
-    import core.stdc.string;
     import std.digest;
     
     ubyte[] alice_secret = fromHexString("3e2ca06a3d39702c00ee794f7a0f82fef9e2c8e23a57b70f1fd1c93f7dc1ed16");
     ubyte[32] alice_public;
     crypto_x25519_public_key(alice_public.ptr, alice_secret.ptr);
-    //writefln("Alice's public key: %(%02x%)", alice_public);
     
     ubyte[] bob_secret = fromHexString("57fa48d5c4d94134f13d3d5971f27ca36f832e32560c8f75e95ba07ccd7327ec");
     ubyte[32] bob_public;
     crypto_x25519_public_key(bob_public.ptr, bob_secret.ptr);
-    //writefln("Bob's public key: %(%02x%)", bob_public);
     
     ubyte[32] alice_shared_secret;
     crypto_x25519(alice_shared_secret.ptr, alice_secret.ptr, bob_public.ptr);
-    //writefln("Alice's shared secret: %(%02x%)", alice_shared_secret);
     
     ubyte[32] bob_shared_secret;
     crypto_x25519(bob_shared_secret.ptr, bob_secret.ptr, alice_public.ptr);
-    //writefln("Bob's shared secret: %(%02x%)", bob_shared_secret);
     
-    assert(memcmp(alice_shared_secret.ptr, bob_shared_secret.ptr, alice_shared_secret.length) == 0);
+    assert(alice_shared_secret == bob_shared_secret);
 }

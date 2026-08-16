@@ -202,8 +202,6 @@ void crypto_poly1305(u8* mac, const(u8)* message, size_t message_size, const(u8)
 
 unittest
 {
-    import core.stdc.string;
-    
     uint8_t[32] key = [
         0x85, 0xd6, 0xbe, 0x78, 0x57, 0x55, 0x6d, 0x33, 
         0x7f, 0x44, 0x52, 0xfe, 0x42, 0xd5, 0x06, 0xa8,
@@ -222,5 +220,5 @@ unittest
     
     crypto_poly1305(mac.ptr, cast(const(uint8_t)*)msg.ptr, msg.length, key.ptr);
 
-    assert(memcmp(mac.ptr, expected_mac.ptr, mac.length) == 0);
+    assert(mac == expected_mac);
 }

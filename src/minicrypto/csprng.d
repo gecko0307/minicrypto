@@ -51,7 +51,7 @@ else version(Posix)
 else
     pragma(msg, "csprng is not supported on this system");
 
-pragma(inline, true);
+pragma(inline, true)
 bool cryptoRandomBytes(ubyte* bufferPtr, size_t bufferLength) @nogc nothrow
 {
     if (bufferLength == 0)
@@ -94,13 +94,13 @@ bool cryptoRandomBytes(ubyte* bufferPtr, size_t bufferLength) @nogc nothrow
     }
 }
 
-pragma(inline, true);
+pragma(inline, true)
 bool cryptoRandomBytes(ubyte[] buffer) @nogc nothrow
 {
     return cryptoRandomBytes(buffer.ptr, buffer.length);
 }
 
-pragma(inline, true);
+pragma(inline, true)
 T cryptoRandomValue(T)() @nogc nothrow
     if (is(T == struct) ||
         isStaticArray!T ||

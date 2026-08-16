@@ -63,11 +63,8 @@ unittest
     
     ubyte[32] data = cryptoRandomValue!(ubyte[32]);
     
-    //writefln("%(%02x%)", data);
-    
     char[] hex = new char[data.length * 2];
     assert(bytes_to_hex(data, hex));
-    //writeln(hex);
     
     assert(hex == format("%(%02x%)", data));
     

@@ -389,7 +389,5 @@ unittest
     
     crypto_argon2(hash.ptr, hash.length, workArea, config, inputs, crypto_argon2_no_extras);
     
-    //writefln("Hash: %(%02x%)", hash);
-    
     assert(hash == fromHexString("43a21059c9fd9d628c78a8591c7f6b82141e9bfeeb728c7a2c44d1b8f66d96b3"));
 }
