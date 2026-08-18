@@ -1,43 +1,13 @@
-name: SLSA Generic Generator
+name: SLSA Source Generator
 
 on:
-  workflow_dispatch:
   release:
     types: [created]
 
 jobs:
-  # Step 1: Package the source library and generate its hash
-  package:
-    runs-on: ubuntu-latest
-    outputs:
-      hashes: ${{ steps.hash.outputs.hashes }}
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Create Source Archive
-        run: git archive --format=tar.gz --output=minicrypto.tar.gz HEAD
-
-      - name: Generate Source Hash
-        id: hash
-        run: |
-          echo "hashes=$(sha256sum minicrypto.tar.gz | base64 -w0)" >> "$GITHUB_OUTPUT"
-
-      - name: Upload Source Archive
-        uses: actions/upload-artifact@v4
-        with:
-          name: minicrypto
-          path: minicrypto.tar.gz
-
-  # Step 2: Automatically sign and generate SLSA 3 provenance for the source zip
   provenance:
-    needs: package
     permissions:
+      actions: read
       id-token: write
       contents: write
-      actions: read
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
-    with:
-      base64-subjects: "${{ needs.package.outputs.hashes }}"
-      upload-assets: true
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_source_slsa3.yml@v2.0.0
