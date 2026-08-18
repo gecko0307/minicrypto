@@ -6,56 +6,38 @@ on:
     types: [created]
 
 jobs:
-  # Job 1: Compile the D library and compute its cryptographic hash
-  build:
+  # Step 1: Package the source library and generate its hash
+  package:
     runs-on: ubuntu-latest
     outputs:
       hashes: ${{ steps.hash.outputs.hashes }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Install the D compiler (DMD/LDC) and Dub
-      - name: Set up D compiler
-        uses: dlang-community/setup-dlang@v1
-        with:
-          compiler: ldc-latest
+      - name: Create Source Archive
+        run: git archive --format=tar.gz --output=minicrypto.tar.gz HEAD
 
-      # Compile your cryptography library
-      - name: Build Library
-        run: |
-          dub build --build=release-nobounds
-
-      # Generate SHA-256 subjects formatted in base64 as required by the SLSA generator
-      - name: Generate hashes
+      - name: Generate Source Hash
         id: hash
-        shell: bash
         run: |
-          echo "hashes=$(sha256sum libminicrypto.a | base64 -w0)" >> "$GITHUB_OUTPUT"
+          echo "hashes=$(sha256sum minicrypto.tar.gz | base64 -w0)" >> "$GITHUB_OUTPUT"
 
-      # Upload the compiled artifact so the release step or downstream processes can fetch it
-      - name: Upload artifact
+      - name: Upload Source Archive
         uses: actions/upload-artifact@v4
         with:
           name: minicrypto
-          path: libminicrypto.a
+          path: minicrypto.tar.gz
 
-      - name: Upload SLSA Provenance to Actions Artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: slsa-provenance
-          path: "*.intoto.jsonl"
-
-  # Job 2: Call the trusted reusable workflow to generate non-forgeable SLSA Level 3 provenance
+  # Step 2: Automatically sign and generate SLSA 3 provenance for the source zip
   provenance:
-    needs: [build]
+    needs: package
     permissions:
-      actions: read    # Required to detect the GitHub Actions environment context
-      id-token: write  # Required for OIDC signing and provenance identification
-      contents: write  # Required to attach the provenance file to a GitHub Release
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.1.0
+      id-token: write
+      contents: write
+      actions: read
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
     with:
-      base64-subjects: "${{ needs.build.outputs.hashes }}"
-      upload-assets: true # Automatically uploads the .intoto.jsonl provenance file to the GitHub Release
+      base64-subjects: "${{ needs.package.outputs.hashes }}"
+      upload-assets: true
