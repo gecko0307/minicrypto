@@ -32,9 +32,7 @@ jobs:
         id: hash
         shell: bash
         run: |
-          echo "hashes<<EOF" >> "$GITHUB_OUTPUT"
-          sha256sum libminicrypto.a | base64 -w0 >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "hashes=$(sha256sum libminicrypto.a | base64 -w0)" >> "$GITHUB_OUTPUT"
 
       # Upload the compiled artifact so the release step or downstream processes can fetch it
       - name: Upload artifact
