@@ -33,7 +33,7 @@ jobs:
         shell: bash
         run: |
           echo "hashes<<EOF" >> "$GITHUB_OUTPUT"
-          sha256sum minicrypto.a | base64 -w0 >> "$GITHUB_OUTPUT"
+          sha256sum libminicrypto.a | base64 -w0 >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
       # Upload the compiled artifact so the release step or downstream processes can fetch it
@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: minicrypto
-          path: minicrypto.a
+          path: libminicrypto.a
 
   # Job 2: Call the trusted reusable workflow to generate non-forgeable SLSA Level 3 provenance
   provenance:
