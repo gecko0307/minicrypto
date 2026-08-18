@@ -1,13 +1,76 @@
 name: SLSA Source Generator
 
 on:
+  workflow_dispatch:
   release:
     types: [created]
 
 jobs:
+  package:
+    runs-on: ubuntu-latest
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Determine Artifact Name
+        id: version
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            TAG="${{ github.event.release.tag_name }}"
+            echo "FILE_NAME=minicrypto-${TAG}.tar.gz" >> $GITHUB_ENV
+          else
+            echo "FILE_NAME=minicrypto-manual.tar.gz" >> $GITHUB_ENV
+          fi
+
+      - name: Create Source Archive
+        run: |
+          git archive --format=tar.gz --output="${{ env.FILE_NAME }}" HEAD
+
+      - name: Generate Source Hash
+        id: hash
+        shell: bash
+        run: |
+          echo "hashes=$(sha256sum ${{ env.FILE_NAME }} | base64 -w0)" >> "$GITHUB_OUTPUT"
+
+      - name: Upload Archive to Actions
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-archive
+          path: minicrypto-*.tar.gz
+
+      - name: Upload Archive to Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: minicrypto-*.tar.gz
+
   provenance:
+    needs: package
     permissions:
+      id-token: write  
+      contents: write  
       actions: read
-      id-token: write
-      contents: write
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_source_slsa3.yml@v2.0.0
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.1.0
+    with:
+      base64-subjects: "${{ needs.package.outputs.hashes }}"
+      upload-assets: ${{ github.event_name == 'release' }}
+
+  download-provenance:
+    needs: [package, provenance]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Download Attestation
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.provenance.outputs.attestation-download-name }}
+
+      - name: Upload SLSA Provenance to Actions Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: slsa-provenance
+          path: "*.intoto.jsonl"
