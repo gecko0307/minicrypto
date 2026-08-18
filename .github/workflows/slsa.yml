@@ -1,0 +1,56 @@
+name: SLSA Generic Generator
+
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+
+jobs:
+  # Job 1: Compile the D library and compute its cryptographic hash
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install the D compiler (DMD/LDC) and Dub
+      - name: Set up D compiler
+        uses: dlang-community/setup-dlang@v1
+        with:
+          compiler: ldc-latest
+
+      # Compile your cryptography library
+      - name: Build Library
+        run: |
+          dub build --build=release-nobounds
+
+      # Generate SHA-256 subjects formatted in base64 as required by the SLSA generator
+      - name: Generate hashes
+        id: hash
+        shell: bash
+        run: |
+          echo "hashes<<EOF" >> "$GITHUB_OUTPUT"
+          sha256sum minicrypto.a | base64 -w0 >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      # Upload the compiled artifact so the release step or downstream processes can fetch it
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: minicrypto
+          path: minicrypto.a
+
+  # Job 2: Call the trusted reusable workflow to generate non-forgeable SLSA Level 3 provenance
+  provenance:
+    needs: [build]
+    permissions:
+      actions: read    # Required to detect the GitHub Actions environment context
+      id-token: write  # Required for OIDC signing and provenance identification
+      contents: write  # Required to attach the provenance file to a GitHub Release
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.1.0
+    with:
+      base64-subjects: "${{ needs.build.outputs.hashes }}"
+      upload-assets: true # Automatically uploads the .intoto.jsonl provenance file to the GitHub Release
